@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Website Design</title>
+    <link rel="stylesheet" type="text/css" href="Penjualan style.css"/>
+    <script src="footer-navigation.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Tombol Keranjang */
+        .cart-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #2C3333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Sidebar Keranjang */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px; /* Awalnya tersembunyi */
+            width: 300px;
+            height: 100%;
+            background-color: #2c2c54;
+            color: white;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            transition: right 0.3s ease; /* Efek slide */
+            z-index: 1050; /* Pastikan lebih besar dari z-index header */
+        }
+
+        /* Sidebar Muncul */
+        .cart-sidebar.active {
+            right: 0; /* Muncul di layar */
+        }
+
+        /* Tombol Tutup Sidebar */
+        .cart-sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Efek Buka Sidebar */
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        /* Tombol Checkout */
+        .checkout-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #2C3333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .cart-item {
+            margin-bottom: 10px;
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head> 
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="#" class="logo">FOOD EAT</a>
+        <div class="bx bx-menu" id="menu-icon"></div>
+        <ul class="navbar">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#services">Service</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </header>
+
+    <!-- Tombol Keranjang -->
+    <button id="cart-btn" class="cart-button">🛒 Keranjang</button>
+
+    <!-- Sidebar Keranjang -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <button id="closeCart" class="close-btn">×</button>
+        <h3>Keranjang Belanja</h3>
+        <ul id="cart-items">
+            <!-- Daftar produk di keranjang -->
+        </ul>
+        <div class="cart-total">
+            <p>Total: <span id="cart-total-price">Rp 0</span></p>
+        </div>
+        <button id="checkout-btn" class="checkout-button">Checkout</button>
+    </div>
+
+    <!-- Home Section -->
+    <section class="home" id="home">
+        <div class="home-text">
+            <h1>Selamat Datang <br> Di FOODEAT</h1>
+            <h2>Nikmati cita rasa masakan khas nusantara yang autentik, dibuat dari bahan-bahan segar pilihan setiap hari.</h2>
+            <a href="#" class="btn">Today's Menu</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-image">
+            <img src="Image/Tentang Kami.jpeg"Logo brand">
+        </div>
+        <div class="about-text">
+            <span>About Us</span>
+            <h2>Toko Kami...<br>Hemat dan Cepat</h2>
+            <p>Kami adalah sebuah warung makan yang berkomitmen untuk menyajikan hidangan lezat yang selalu segar, berkualitas, dan penuh cita rasa khas nusantara. Di sini, kami percaya bahwa makanan bukan hanya sekadar kebutuhan, tetapi juga pengalaman yang bisa membawa kenangan, kehangatan, dan kebahagiaan. <br>
+                <br> Terima kasih telah mempercayakan pengalaman kuliner Anda kepada kami. Kami siap menyambut Anda dengan makanan yang nikmat dan pengalaman yang tak terlupakan. Silakan datang ke FoodEat atau pesan online untuk merasakan kelezatan menu kami.
+              </p>
+            <a href="#" class="btn">Today's Menu</a>
+        </div>
+    </section>
+
+    <!--------menu start-------->
+    <section class="menu" id="menu">
+        <div class="heading">
+            <h2>Menu Makanan :</h2>
+            <span>Makanan Utama</span>
+        </div>
+
+    <div class="menu-container">
+        <div class="box">
+            <div class="box-image">
+                <img src="/WEB/Image/Nasi Goreng Seefod.jpeg">
+                <div>
+                    <h2>Nasi Goreng Seafood</h2>
+                    <h3>Rp35.000<h3>
+                    <button onclick="addToCart('Nasi Goreng Seafood', 35000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="/WEB/Image/Mie Goreng.jpeg">
+                <div>
+                    <h2>Mie Goreng Spesial</h2>
+                    <h3>Rp40.000<h3>
+                    <button onclick="addToCart('Mie Goreng Spesial', 40000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="/WEB/Image/Ayam Bakar.jpeg">
+                <div>
+                    <h2>Ayam Bakar Kecap</h2>
+                    <h3>Rp40.000<h3>
+                    <button onclick="addToCart('Ayam Bakar Kecap', 40000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="/WEB/Image/Sate Ayam.jpeg">
+                <div>
+                    <h2>Sate Ayam Madura</h2>
+                    <h3>Rp35.000<h3>
+                    <button onclick="addToCart('Sate Ayam Madura', 35000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="/WEB/Image/Ikan Bakar.jpeg">
+                <div>
+                    <h2>Ikan Bakar Jimbaran</h2>
+                    <h3>Rp15.000<h3>
+                    <button onclick="addToCart('Ikan Bakar Jimbaran', 15000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="/WEB/Image/Bihun Goreng.png">
+                <div>
+                    <h2>Bihun Goreng</h2>
+                    <h3>Rp30.000<h3>
+                    <button onclick="addToCart('Bihun Goreng', 30000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="menu" id="menu">
+    <div class="heading">
+        <h2>Menu Makanan :</h2>
+        <span>Paket Nasi</span>
+    </div>
+
+<div class="menu-container">
+    <div class="box">
+        <div class="box-image">
+            <img src="/WEB/Image/Paket Nasi Ayam Goreng Sambal Matah.jpeg">
+            <div>
+                <h2>Nasi Ayam Goreng Sambal Matah</h2>
+                <h3>Rp30.000<h3>
+                <button onclick="addToCart('Nasi Ayam Goreng Sambal Matah', 30000)">Tambah ke Keranjang</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-image">
+            <img src="/WEB/Image/Paket Nasi Campur Bali.jpeg">
+            <div>
+                <h2>Nasi Campur Bali</h2>
+                <h3>Rp35.000<h3>
+                <button onclick="addToCart('Nasi Campur Bali', 35000)">Tambah ke Keranjang</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-image">
+            <img src="/WEB/Image/Paket Nasi Ayam Penyet.jpeg">
+            <div>
+                <h2>Nasi Ayam Penyet</h2>
+                <h3>Rp30.000<h3>
+                <button onclick="addToCart('Nasi Ayam Penyet', 30000)">Tambah ke Keranjang</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-image">
+            <img src="/WEB/Image/Paket Nasi Lele Goreng.jpeg">
+            <div>
+                <h2>Nasi Lele Goreng</h2>
+                <h3>Rp25.000<h3>
+                <button onclick="addToCart('Nasi Lele Goreng', 25000)">Tambah ke Keranjang</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-image">
+            <img src="/WEB/Image/Paket Nasi Bebek.png">
+            <div>
+                <h2>Nasi Bebek Goreng</h2>
+                <h3>Rp25.000<h3>
+                <button onclick="addToCart('Nasi Bebek Goreng', 25000)">Tambah ke Keranjang</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-image">
+            <img src="/WEB/Image/Paket Nasi Liwet Sunda.png">
+            <div>
+                <h2>Nasi Liwet Sunda</h2>
+                <h3>Rp35.000<h3>
+                <button onclick="addToCart('Nasi Liwet Sunda', 35000)">Tambah ke Keranjang</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+</section>
+
+<section class="menu" id="menu">
+    <div class="heading">
+        <h2>Menu Minuman :</h2>
+    </div>
+
+    <div class="menu-container">
+        <div class="box">
+            <div class="box-image">
+                <img src="Image/Es Teh.jpeg" alt="Menu Name">
+                <div>
+                    <h2>Es Teh</h2>
+                    <h3>Rp7.000<h3>
+                    <button onclick="addToCart('Es Jeruk', 7000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="Image/Es Jeruk.jpeg" alt="Menu Name">
+                <div>
+                    <h2>Es Jeruk</h2>
+                    <h3>Rp10.000<h3>
+                    <button onclick="addToCart('Es Jeruk', 10000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="Image/Jus Alpukat.jpeg">
+                <div>
+                    <h2>Jus Alpukat</h2>
+                    <h3>Rp15.000<h3>
+                    <button onclick="addToCart('Jus Alpukat', 15000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="Image/Es Kopyor.jpeg" alt="Menu Name">
+                <div>
+                    <h2>Es Kopyor</h2>
+                    <h3>Rp15.000<h3>
+                    <button onclick="addToCart('Es Kopyor', 15000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="Image/Kopi Tubruk.jpeg" alt="Menu Name">
+                <div>
+                    <h2>Kopi Tubruk</h2>
+                    <h3>Rp12.000<h3>
+                    <button onclick="addToCart('Kopi Tubruk', 12000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-image">
+                <img src="/WEB/Image/Es Teler (1).png">
+                <div>
+                    <h2>Es Teler</h2>
+                    <h3>Rp15.000<h3>
+                    <button onclick="addToCart('Es Teler', 15000)">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="heading">
+            <h2>Services</h2>
+            <span>We Provide the Best Quality Food</span>
+        </div>
+        <div class="services-container">
+            <div class="s-box">
+                <h3>Order</h3>
+                <p>Pesan di toko kami. Layanan 24 jam siap kirim kapan pun dengan jarak pengiriman yang luas. Anda puas, kami senang.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section start -->
+<section id="contact" class="contact-section">
+    <h2>Kontak Kami</h2>
+    <p>Terima kasih telah mengunjungi website kami! Kami senang dapat melayani Anda. Jika Anda memiliki pertanyaan, saran, atau ingin melakukan pemesanan, jangan ragu untuk menghubungi kami melalui informasi di bawah ini:</p>
+  
+    <div class="contact-container">
+        <div class="contact-info">
+            <div class="address">
+                <h3>📍 Alamat:</h3>
+                <p>Jl. Raya Darmo No.45, Kec. Tegalsari, Kota Surabaya, Jawa Timur 60265 Indonesia</p>
+            </div>
+  
+            <div class="phone">
+                <h3>📞 Telepon:</h3>
+                <p>031-23456789</p>
+            </div>
+  
+            <div class="whatsapp">
+                <h3>📱 WhatsApp:</h3>
+                <p>+62-8952-3894-6620 (Fast Response)</p>
+            </div>
+  
+            <div class="email">
+                <h3>✉️ Email:</h3>
+                <p>Foodeat@gmail.com</p>
+            </div>
+  
+            <div class="hours">
+                <h3>🕑 Jam Operasional:</h3>
+                <p>Senin - Jumat: 10.00 - 21.00 WIB<br>
+                Sabtu - Minggu: 11.00 - 22.00 WIB</p>
+            </div>
+        </div>
+  
+        <div class="contact-form">
+            <h3>Kirim pesan melalui formulir di bawah ini:</h3>
+            <form action="contact.php" method="POST">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" required>
+  
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+  
+                <label for="message">Pesan:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+  
+                <button type="submit">Kirim Pesan</button>
+            </form>
+        </div>
+    </div>
+  </section>
+  <!-- Contact Section end -->
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="socials">
+            <a href="#"><i class='bx bxl-instagram'></i></a>
+            <a href="#"><i class='bx bxl-twitter'></i></a>
+            <a href="#"><i class='bx bxl-facebook'></i></a>
+        </div>
+        <div class="credit">
+            <p>Created by <a href="#">M. Rifqi, R. Satriyo Wibowo, Alfi Eryan Fitra</a>. | &copy; 2023</p>
+        </div>
+    </footer>
+
+    <script>
+        // Elemen yang digunakan
+        const cartButton = document.getElementById('cart-btn');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const closeCart = document.getElementById('closeCart');
+        const checkoutButton = document.getElementById('checkout-btn');
+
+        // Buka Sidebar
+        cartButton.addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+        });
+
+        // Tutup Sidebar
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+        });
+
+        // Fungsi untuk menambahkan produk ke keranjang
+        function addToCart(productName, price) {
+            const cartItems = document.getElementById('cart-items');
+            const totalPriceElement = document.getElementById('cart-total-price');
+
+            // Tambahkan produk ke daftar keranjang
+            const li = document.createElement('li');
+            li.textContent = `${productName} - Rp ${price}`;
+            cartItems.appendChild(li);
+
+            // Update total harga
+            const currentTotal = parseInt(totalPriceElement.textContent.replace('Rp ', ''));
+            const newTotal = currentTotal + price;
+            totalPriceElement.textContent = `Rp ${newTotal}`;
+        }
+
+        checkoutButton.addEventListener('click', () => {
+        const cartItems = document.querySelectorAll('#cart-items li');
+        if (cartItems.length === 0) {
+            alert('Keranjang belanja kosong!');
+            return;
+        }
+
+        const products = [];
+        cartItems.forEach(item => {
+            const [name, price] = item.textContent.split(' - Rp ');
+            products.push({ name: name.trim(), price: parseInt(price) });
+        });
+
+        const totalPrice = parseInt(document.getElementById('cart-total-price').textContent.replace('Rp ', ''));
+
+        // Kirim data ke PHP menggunakan fetch
+        fetch('checkout.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                products: products,
+                total_price: totalPrice
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data); // Tampilkan respon dari server
+            // Kosongkan keranjang setelah checkout berhasil
+            document.getElementById('cart-items').innerHTML = '';
+            document.getElementById('cart-total-price').textContent = 'Rp 0';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat checkout!');
+        });
+    });
+
+    </script>
+</body>
+</html>
